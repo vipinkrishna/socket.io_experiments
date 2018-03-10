@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>SOCKET.IO CLIENT</title>
+</head>
+
+<script src="http://localhost:3000/socket.io.js"></script>
+
+<script>
+    var socket = io();
+
+    socket.on("iobroadcast", function (data) {
+        document.body.innerHTML = data.msg;
+    });
+
+</script>
+
+<body>
+</body>
+
+</html>

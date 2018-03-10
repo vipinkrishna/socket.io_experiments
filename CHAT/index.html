@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>SOCKET.IO CLIENT</title>
+</head>
+
+<script src="http://localhost:3000/socket.io.js"></script>
+
+<script>
+
+    //EVENTS: connect, connecting, disconnect, connect_failed, error, message, reconnect, reconnecting, reconnect_failed
+    //NAMESPACE: var socket = io("/namespace");
+
+    var socket = io();
+    // var socket = io.connect("http://localhost:3000");
+
+    var username;
+
+    function createuser() {
+        var newusername;
+        newusername = document.getElementById("inputnewusername").value.trim();
+        if (newusername)
+            socket.emit("createuserevent", { name: newusername });
+    }
+
+    function chat() {
+        socket.emit('startbroadcast', { name: username, msg: document.getElementById("chatmsg").value });
+        document.getElementById(chatmsg).value = "";
+    }
+
+    socket.on("userexists", function (data) {
+        document.getElementById("info").innerHTML = data.msg;
+    });
+
+    socket.on("startchat", function (user) {
+        username = user.name;
+        document.getElementById("interface").innerHTML = '<input id="chatmsg" placeholder="Message">' + '<button onclick="chat()">Send</button>';
+    });
+
+    socket.on("livebroadcast", function (data) {
+        document.getElementById("chatroom").innerHTML += ('<p><b>' + data.name + '</b>: ' + data.msg + '</p>');
+    });
+
+</script>
+
+<body>
+    <div id="info"></div>
+    <div id="interface">
+        <input id="inputnewusername" placeholder="Name">
+        <button onclick="createuser()">Enter</button>
+    </div>
+    <div id="chatroom"></div>
+</body>
+
+</html>

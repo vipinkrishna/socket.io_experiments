@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>SOCKET.IO CLIENT</title>
+</head>
+
+<script src="http://localhost:3000/socket.io.js"></script>
+
+<script>
+    // var socket = io("http://localhost:3000");
+    var socket = io();
+    
+    socket.on("message", function(data){
+        document.write(data);
+    });
+    
+    socket.on("testEvent", function(data){
+        document.write(data.msg);
+    });
+
+    socket.emit("reniEvent", "AN EVENT FROM CLIENT");
+
+</script>
+
+<body>
+    <h3>HELLO SOCKET</h3>
+</body>
+
+</html>

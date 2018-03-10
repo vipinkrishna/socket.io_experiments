@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>CHAT</title>
+</head>
+
+<body>
+    <div id="interface">
+        <input id="txtchatmsg" onkeypress="txtBoxFocus(event)" placeholder="Message">
+        <button onclick="chat()">Send</button>
+    </div>
+    <div id="chatroom"></div>
+</body>
+
+<script src="http://localhost:3000/socket.io.js"></script>
+
+<script>
+
+    //EVENTS: connect, connecting, disconnect, connect_failed, error, message, reconnect, reconnecting, reconnect_failed
+    //NAMESPACE: var socket = io("/namespace");
+
+    // var socket = io.connect('http://localhost:3000');
+    var socket = io();
+
+
+    function txtBoxFocus(e) {
+        if (e.keyCode == 13) {
+            chat();
+        }
+    }
+
+    var myname;
+
+    function chat() {
+        socket.emit('startbroadcast', { name: myname, msg: document.getElementById("txtchatmsg").value });
+        document.getElementById("txtchatmsg").value = "";
+    }
+
+    socket.on("livebroadcast", function (data) {
+        document.getElementById("chatroom").innerHTML += ('<p><b>' + data.name + '</b>: ' + data.msg + '</p>');
+    });
+
+    socket.on("thisisyourname", function (yourname) {
+        myname = yourname;
+    });
+
+</script>
+
+</html>

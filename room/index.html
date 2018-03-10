@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>SOCKET.IO CLIENT</title>
+</head>
+
+<script src="http://localhost:3000/socket.io.js"></script>
+
+<script>
+
+    //EVENTS: connect, connecting, disconnect, connect_failed, error, message, reconnect, reconnecting, reconnect_failed
+    //NAMESPACE: var socket = io("/namespace");
+
+    var socket = io();
+
+    socket.on("connectToRoom", function (data) {
+        document.getElementById("output").innerHTML = "";
+        document.getElementById("output").innerHTML = data;
+    });
+
+</script>
+
+<body>
+    <div id="output"></div>
+</body>
+
+</html>

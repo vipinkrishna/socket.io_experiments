@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>SOCKET.IO CLIENT</title>
+</head>
+
+<script src="http://localhost:3000/socket.io.js"></script>
+
+<script>
+    var socketone = io("/namespaceone");
+
+    socketone.on("hione", function (data) {
+        document.getElementById("divone").innerHTML = data.msg;
+    });
+
+    var sockettwo = io("/namespacetwo");
+
+    sockettwo.on("hitwo", function (data) {
+        document.getElementById("divtwo").innerHTML = data.msg;
+    });
+
+</script>
+
+<body>
+    <div id="divone"></div>
+    <div id="divtwo"></div>
+</body>
+
+</html>
